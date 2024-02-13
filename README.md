@@ -1,3 +1,6 @@
+Citation information: 
+Spangher, et al. ``Benchmarking models in a test suite for disruptions warnings." 2024. Pre-print. (Include URL.) 
+
 Evaluation class for disruption prediction
 
 Please see the associated notebook, model_performance.ipynb, for an example of how to use the class; indeed, if using within your own disruption predictor you may simply copy the notebok and input your own datafiles. 
