@@ -11,14 +11,18 @@ val_metrics_report = performance_calculator.eval(
     unrolled_proba = dict_y_proba_shots_val,
     metrics = metrics,
     params_dict = params_dict
-)```
+)
+```
 
 In order to use this, you must massage your disruptivity scores into the dictionary dict_y_proba_shots_val. The four fields are noted.
 
 Some notes:
 - You may construct the field ``time until disruption'' by merely subtracting the your time slices' indices from the length of the sequence and multiplying by your sampling resolution, i.e.: 
 
-``` (len(observation) - np.linspace(0, len(observation)) * sampling_frequency```
+``` 
+(len(observation) - np.linspace(0, len(observation)) * sampling_frequency
+```
+
 - the Time shot is an incrementing count of the sampling frequency. If you are only using shots with the same time base, i.e. .005 seconds throughout, this column can simply be incrementing ones.
 
 The ``params'' dictionary allows you to specify hyperparameters like thresholds and hysteresis. The fields have the following meaning:
