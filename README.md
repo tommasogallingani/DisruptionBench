@@ -1,15 +1,21 @@
-Citation information: 
-Spangher, et al. ``Benchmarking models in a test suite for disruptions warnings." 2024. Pre-print. (Include URL.) 
+# DisruptionBench: Benchmarking for Disruption Prediction Models
 
-**DisruptionBench**: Evaluation class for disruption prediction
+Welcome to **DisruptionBench**, a comprehensive benchmarking class specifically designed for evaluating machine learning-driven disruption prediction models in tokamak reactors. This repository is created to facilitate the assessment of your models using a robust benchmarking framework, as detailed in our pre-print, "DisruptionBench: A robust benchmarking framework for machine learning-driven disruption prediction."
 
-Please see the associated notebook, model_performance.ipynb, for an example of how to use the class; indeed, if using within your own disruption predictor you may simply copy the notebok and input your own datafiles. 
+## Getting Started
 
-Please pay careful attention to the dimensionality of the inputs expected; you may need an np.unsqueeze(-1) or reshape command to put an extra dimension at the end of your data. 
+To begin using DisruptionBench, please explore the `model_performance.ipynb` notebook provided in this repository. This notebook serves as a practical guide on how to utilize the DisruptionBench class with your disruption prediction models. You can directly copy the notebook and input your own data files for evaluation.
 
-The main workhorse of the benchmark is the function: 
+### Prerequisites
 
-```# Compute metrics_report_
+Before diving into the benchmarking process, ensure your data aligns with the expected input dimensions. You might need to use `np.unsqueeze(-1)` or a reshape command to add an extra dimension at the end of your data arrays, matching the DisruptionBench input requirements.
+
+### Benchmarking Process
+
+The core function of DisruptionBench is to compute a metrics report for your model's performance. Here is a snippet on how to invoke this computation:
+
+```python
+# Compute metrics_report
 val_metrics_report = performance_calculator.eval(
     unrolled_proba = dict_y_proba_shots_val,
     metrics = metrics,
@@ -17,19 +23,33 @@ val_metrics_report = performance_calculator.eval(
 )
 ```
 
-In order to use this, you must massage your disruptivity scores into the dictionary dict_y_proba_shots_val. The four fields are noted.
+To use this functionality, you must prepare your model's disruptivity scores in a dictionary named `dict_y_proba_shots_val`, adhering to the structure described in our documentation.
 
-Some notes:
-- You may construct the field ``time until disruption'' by merely subtracting the your time slices' indices from the length of the sequence and multiplying by your sampling resolution, i.e.: 
+#### Important Notes:
 
-``` 
-(len(observation) - np.linspace(0, len(observation)) * sampling_frequency
+- **Time until disruption:** You can calculate the "time until disruption" field by subtracting your time slices' indices from the sequence length and multiplying by the sampling frequency, as shown below:
+
+    ```python
+    (len(observation) - np.array(range(0, len(observation))) * sampling_frequency
+    ```
+
+- **Time shot:** This field should represent an incrementing count based on the sampling frequency. If your shots consistently use the same time base (e.g., 0.005 seconds), this column can simply contain incrementing ones.
+
+### Configuration Parameters
+
+The `params` dictionary within DisruptionBench allows you to specify various hyperparameters relevant to your model's evaluation. These parameters include:
+
+- `high_thr`: The high threshold above which a disruption warning is considered valid.
+- `low_thr`: The lower threshold that, when exceeded but below the high threshold, does not trigger a disruption warning; falling below this threshold resets the system.
+- `t_hysteresis`: The number of consecutive time-steps above the high threshold required before triggering an alarm.
+- `t_useful`: Defines the period prior to the end of a shot during which the disruption warning system's alerts are deemed useful. Alerts triggered beyond this period are not counted as valid positives.
+
+## Citation
+
+If you utilize DisruptionBench in your research, please cite our work as follows:
+
+```
+Spangher, et al. "DisruptionBench: A robust benchmarking framework for machine learning-driven disruption prediction." 2024. Pre-print.
 ```
 
-- the Time shot is an incrementing count of the sampling frequency. If you are only using shots with the same time base, i.e. .005 seconds throughout, this column can simply be incrementing ones.
-
-The ``params'' dictionary allows you to specify hyperparameters like thresholds and hysteresis. The fields have the following meaning:
-  - 'high_thr': the high threshold above which a disruption warning system counts. 
-  - 'low_thr': a lower threshold; if above this threshold but below the high threshold, the disruption warning system does not count, and if below, it resets. 
-  - 't_hysteresis': the number of time-steps above the higher threshold needed before an alarm is triggered. 
-  - 't_useful': the amount of time prior to the end of a shot that the disruption warning system is useful. I.e., if a positive is flagged after this metric, it will not be considered a valid positive. 
+Thank you for considering DisruptionBench for evaluating your disruption prediction models. We hope this tool aids in advancing the field of tokamak plasma stability research.
