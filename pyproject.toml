@@ -1,0 +1,29 @@
+[build-system]
+requires = [
+    "setuptools"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "package_template"
+version = "0.0"
+authors = [
+    { name = "Dream Team @ Ammagamma", email = "dream.team@ammagamma.com" }
+]
+description = "Ammagamma project template"
+readme = "README.md"
+# requires-python = ">=3.7"
+
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+zip-safe = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.scripts]
+# my_script = 'package_template.script_file:function'
