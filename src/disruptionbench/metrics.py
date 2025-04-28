@@ -86,7 +86,7 @@ def auc(
             raise ValueError("x is neither increasing nor decreasing "
                              ": {}.".format(x))
 
-    area = direction * np.trapz(y, x)
+    area = direction * np.trapezoid(y, x)
     if isinstance(area, np.memmap):
         # Reductions such as .sum used internally in np.trapz do not return a
         # scalar by default for numpy.memmap instances contrary to
@@ -256,6 +256,12 @@ class ModelEvaluator:
         :return: metrics_report
 
         """
+
+        # Convert to array
+        for shot in unrolled_proba.keys():
+            for key in unrolled_proba[shot].keys():
+                if isinstance(unrolled_proba[shot][key], list):
+                    unrolled_proba[shot][key] = np.array(unrolled_proba[shot][key])
 
         # Convert from unrolled probabilities to [0,1] sequences
         self.unrolled_proba_to_shot_classif(unrolled_proba, params_dict)
