@@ -1,0 +1,30 @@
+[build-system]
+requires = [
+    "setuptools"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "disruptionbench"
+version = "0.1"
+authors = [
+    { name = "Spangher Lucas", email = "spangher@psfc.mit.edu" },
+    { name = "Tommaso Gallingani", email="t.gallingani@gmail.com"}
+]
+description = "DisruptionBench is a benchmarking framework for evaluating the performance of machine learning models in the contex of tomakams controls."
+readme = "README.md"
+# requires-python = ">=3.7"
+
+dynamic = ["dependencies"]
+
+[tool.setuptools]
+zip-safe = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.scripts]
+# my_script = 'package_template.script_file:function'
