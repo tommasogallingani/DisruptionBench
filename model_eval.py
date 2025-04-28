@@ -1,13 +1,7 @@
-# import os
-# import json
-# import yaml
-# import torch
-# import pickle
+
 import logging
 import numpy as np
-# import pandas as pd
-# from tqdm import tqdm
-# import multiprocessing
+
 from functools import partial
 from sklearn.metrics import f1_score
 from sklearn.metrics import recall_score
@@ -17,9 +11,6 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import fbeta_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import balanced_accuracy_score
-# from eni.ml.magnetic_fusion.mf_disruption.metrics import tpr_score
-# from eni.ml.magnetic_fusion.mf_disruption.metrics import fpr_score
-# from eni.ml.magnetic_fusion.mf_disruption.metrics import compute_AUC_Zhu
 
 try:
     logger = logging.getLogger('MagneticFusionTrain')

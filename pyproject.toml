@@ -5,12 +5,13 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "package_template"
-version = "0.0"
+name = "disruptionbench"
+version = "0.1"
 authors = [
-    { name = "Dream Team @ Ammagamma", email = "dream.team@ammagamma.com" }
+    { name = "Spangher Lucas", email = "spangher@psfc.mit.edu" },
+    { name = "Tommaso Gallingani", email="t.gallingani@gmail.com"}
 ]
-description = "Ammagamma project template"
+description = "DisruptionBench is a benchmarking framework for evaluating the performance of machine learning models in the contex of tomakams controls."
 readme = "README.md"
 # requires-python = ">=3.7"
 
