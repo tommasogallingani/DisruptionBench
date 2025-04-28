@@ -4,7 +4,9 @@ Welcome to **DisruptionBench**, a comprehensive benchmarking class specifically 
 
 ## Getting Started
 
-To begin using DisruptionBench, please explore the `model_performance.ipynb` notebook provided in this repository. This notebook serves as a practical guide on how to utilize the DisruptionBench class with your disruption prediction models. You can directly copy the notebook and input your own data files for evaluation.
+To begin using DisruptionBench, please explore the `docs/demo.py` code provided in this repository. 
+This code serves as a practical guide on how to utilize the DisruptionBench class with your disruption prediction models. 
+You can directly copy the notebook and input your own data files for evaluation.
 
 ## How to install
 You can download the latest version of the repository from the GitHub page and then you can install the package with pip:
