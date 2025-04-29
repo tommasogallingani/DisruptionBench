@@ -117,6 +117,80 @@ The list of available metrics is the following:
 - `AUC_zhu`: The Zhu AUC, a specific metric for evaluating disruption prediction models as done in Zhu et al. 2020.
 - `Warning_curve`: A curve showing the relationship between the number of warnings and the time until disruption.
 
+### Example of plotting using the metrics
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from disruptionbench.metrics import ModelEvaluator
+
+params_dict = {
+    'high_thr':.5, # high threshold [-]
+    'low_thr':.5, # low threshold [-]
+    't_hysteresis':0, # number of consecutive seconds above the high threshold required before triggering an alarm [s]
+    't_useful':.005 # time before the end of the shot during which the disruption warning system's alerts are useful [s]
+    }
+
+metrics  = [
+    'f1_score', 
+    'f2_score', 
+    'recall_score', 
+    'precision_score', 
+    'roc_auc_score', 
+    'accuracy_score', 
+    'confusion_matrix', 
+    'tpr', 
+    'fpr', 
+    'AUC_zhu',
+    'Warning_curve',
+]
+
+# Suppose your model predictions are stored in a dictionary named prediction_results
+demo_data = {
+    'shot_1': {
+        'proba_shot': np.array([0.1, 0.2, 0.3, 0.4, 0.5]), # model prediction
+        'time_until_disrupt': np.array([0.1, 0.2, 0.3, 0.4, 0.5]), # time until disruption 
+        'time_shot': np.array([0.005, 0.01, 0.015, 0.02, 0.025]), # time shot
+        'label_shot': 1 # 0 for no disruption, 1 for disruption, true label
+    },
+    'shot_2': {
+        'proba_shot': np.array([0.6, 0.7, 0.8, 0.9, 1.0]), # model prediction
+        'time_until_disrupt': np.array([0.1, 0.2, 0.3, 0.4, 0.5]), # time until disruption 
+        'time_shot': np.array([0.005, 0.01, 0.015, 0.02, 0.025]), # time shot
+        'label_shot': 1 # 0 for no disruption, 1 for disruption, true label
+    }
+}
+model_eval = ModelEvaluator()
+result_metric = model_eval.eval(
+    unrolled_proba = demo_data,
+    metrics = metrics,
+    params_dict = params_dict
+)
+
+fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+
+# Plot ROC curve
+ax[0].plot(result_metric['roc_curve_zhu'][0], result_metric['roc_curve_zhu'][1], color='blue', label='ROC curve')
+ax[0].set_xlabel('False Positive Rate')
+ax[0].set_ylabel('True Positive Rate')
+ax[0].set_title('ROC Curve')
+ax[1].plot(result_metric['Warning_curve'][0], result_metric['Warning_curve'][1], color='blue', label='ROC curve')
+ax[1].set_xlabel('Warning time [s]')
+ax[1].set_ylabel('Cumulative probability')
+# Set log on x axis
+ax[1].set_xscale('log')
+# Vertical line at 40 ms
+ax[1].axvline(x=0.050, color='red', linestyle='--', label='Warning time threshold [50 ms]')
+ax[1].set_title('Warning Curve')
+# Add legend
+ax[1].legend()
+fig.show()
+    
+```
+
+The expected output in this case is the following
+![Warning Curve](docs/res.png)
+
 ## Citation
 
 If you utilize DisruptionBench in your research, please cite our work as follows:
