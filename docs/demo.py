@@ -1,5 +1,5 @@
 import json
-
+from disruptionbench.metrics import ModelEvaluator
 with open('assets/example_val_shots_res.json', 'rb') as f:
     dict_y_proba_shots_val = json.load(f)
 
@@ -8,12 +8,13 @@ with open('assets/example_test_shots_res.json', 'rb') as f:
     dict_y_proba_shots_test = json.load(f)
 
 
+
 # Necessary inputs
 params_dict = {
-    'high_thr':.5,
-    'low_thr':.5,
-    't_hysteresis':0,
-    't_useful':.005
+    'high_thr':.8,
+    'low_thr':.05,
+    't_hysteresis':0.0,
+    't_useful':.05
     }
 
 metrics = [
@@ -31,14 +32,13 @@ metrics = [
 
 
 
-from disruptionbench.metrics import ModelEvaluator
-
 m  = ModelEvaluator()
-m.eval(
+r = m.eval(
     unrolled_proba = dict_y_proba_shots_val,
     metrics = metrics,
     params_dict = params_dict
 )
+
 
 
 
