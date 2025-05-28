@@ -196,8 +196,16 @@ The expected output in this case is the following
 If you utilize DisruptionBench in your research, please cite our work as follows:
 
 ```
-Spangher, et al. "DisruptionBench and Complimentary New Models: Two Advancements in Machine Learning Driven Disruption Prediction." 2024. DOI: 10.1007/s10894-025-00495-2.
+Spangher, L., Bonotto, M., Arnold, W. et al. DisruptionBench and Complimentary New Models: 
+Two Advancements in Machine Learning Driven Disruption Prediction. J Fusion Energ 44, 26 (2025). https://doi.org/10.1007/s10894-025-00495-2
 ```
 
 Thank you for considering DisruptionBench for evaluating your disruption prediction models. 
 We hope this tool aids in advancing the field of tokamak plasma stability research.
+
+
+## Contribute
+
+We welcome contributions to DisruptionBench! If you have suggestions for improvements or find bugs, please open an 
+issue or submit a pull request. Your contributions will help enhance the functionality and usability of 
+this benchmarking framework.
